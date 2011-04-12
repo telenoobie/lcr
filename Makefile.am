@@ -53,7 +53,7 @@ GSM_INCLUDE +=
 
 GSM_SOURCE += gsm_audio.c gsm.cpp
   
-GSM_LIB += /usr/lib/libgsm.a
+GSM_LIB += -lgsm
 
 #gsm_audio.po: gsm_audio.c gsm_audio.h
 #	$(CC) -D_GNU_SOURCE -fPIC -c gsm_audio.c -o gsm_audio.po

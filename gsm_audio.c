@@ -10,7 +10,7 @@
 \*****************************************************************************/ 
 
 extern "C" {
-#include "/usr/include/gsm/gsm.h"
+#include <gsm/gsm.h>
 
 
 /* create gsm instance */
