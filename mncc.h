@@ -56,6 +56,8 @@
 #define GSM_TCHF_FRAME		0x0300
 #define GSM_TCHF_FRAME_EFR	0x0301
 
+#define MNCC_SOCKET_HELLO	0x0400
+
 #define GSM_MAX_FACILITY	128
 #define GSM_MAX_SSVERSION	128
 #define GSM_MAX_USERUSER	128
@@ -185,3 +187,8 @@ struct gsm_data_frame {
 	unsigned char	data[0];
 };
 
+#define MNCC_SOCK_VERSION	1
+struct gsm_mncc_hello {
+	u_int32_t	msg_type;
+	u_int32_t	version;
+};
