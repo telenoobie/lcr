@@ -216,6 +216,20 @@ AS_IF([test "x$with_sip" == xyes -o "x$with_sip" == xyes], [
 		PKG_CHECK_MODULES(SOFIA, sofia-sip-ua >= 1.12)
 	])
 
+# check for VoOTP
+AC_ARG_WITH([vootp],
+	[AS_HELP_STRING([--with-vootp],
+			[compile with VoOTP support (libvootp is required) @<:@default=no@:>@])
+	],
+	[],
+	[with_vootp="check"])
+
+AM_CONDITIONAL(ENABLE_VOOTP, test "x$with_vootp" == "xyes" )
+
+AS_IF([test "x$with_vootp" == xyes -o "x$with_vootp" == xyes], [
+		PKG_CHECK_MODULES(VOOTP, libvootp >= 0.0)
+	])
+
 # Checks for libraries.
 AC_CHECK_LIB([m], [main])
 AC_CHECK_LIB([ncurses], [main])
@@ -259,4 +273,5 @@ AS_IF([test "x$with_gsm_ms" == xyes],[AC_MSG_NOTICE( Compiled with GSM mobile si
 AS_IF([test "x$with_asterisk" == xyes],[AC_MSG_NOTICE( Compiled with Asterisk channel driver support )],[AC_MSG_NOTICE( Not compiled with Asterisk channel driver support)])
 AS_IF([test "x$with_ss5" == xyes],[AC_MSG_NOTICE( Compiled with CCITT No.5 support )],[AC_MSG_NOTICE( Not compiled with CCITT No.5 support)])
 AS_IF([test "x$with_sip" == xyes],[AC_MSG_NOTICE( Compiled with SIP support )],[AC_MSG_NOTICE( Not compiled with SIP support)])
+AS_IF([test "x$with_vootp" == xyes],[AC_MSG_NOTICE( Compiled with VoOTP support )],[AC_MSG_NOTICE( Not compiled with VoOTP support)])
 
