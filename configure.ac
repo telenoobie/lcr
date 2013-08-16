@@ -133,6 +133,23 @@ if test "x$with_asterisk" = "xyes"; then
 	AST_CFLAGS="-Dast_tone_zone_sound=$ast_tone_zone_sound $ast_1_8_or_higher"
 
 	AC_SUBST([AST_CFLAGS])
+
+	AC_CHECK_PROG(ASTERISK, asterisk, executable found,)
+	if test x"$ASTERISK" = x; then
+		AC_MSG_ERROR([asterisk executable not found])
+	fi
+
+	AC_MSG_CHECKING([for asterisk's version])
+		version=`asterisk -V`
+		pri=`echo $version | sed 's#.* \([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)#\1#' `
+		sec=`echo $version | sed 's#.* \([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)#\2#' `
+		ter=`echo $version | sed 's#.* \([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)#\3#' `
+		numver="$(printf '%02d' "$pri")$(printf '%02d' "$sec")$(printf '%02d' "$ter")"
+#		if [ $numver -lt 100000 ]; then
+#   			AC_MSG_ERROR([Asterisk version found is too old; x.y.z required])
+#		fi
+	AC_MSG_RESULT([$numver])
+	AC_DEFINE_UNQUOTED([ASTERISK_VERSION_NUM], $numver, [Asterisk version found])
 fi
 
 AM_CONDITIONAL(ENABLE_ASTERISK_CHANNEL_DRIVER, test "x$with_asterisk" == "xyes" )

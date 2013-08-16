@@ -168,9 +168,6 @@ struct ast_channel;
 #include <asterisk/app.h>
 #include <asterisk/features.h>
 #include <asterisk/sched.h>
-#if ASTERISK_VERSION_NUM < 110000
-#include <asterisk/version.h>
-#endif
 #include "extension.h"
 #include "message.h"
 #include "callerid.h"
@@ -178,6 +175,7 @@ struct ast_channel;
 #include "cause.h"
 #include "select.h"
 #include "options.h"
+#include "config.h"
 #include "chan_lcr.h"
 
 CHAN_LCR_STATE // state description structure
@@ -1192,6 +1190,10 @@ static void lcr_in_setup(struct chan_call *call, int message_type, union paramet
 	strncpy(call->oad, numberrize_callerinfo(param->setup.callerinfo.id, param->setup.callerinfo.ntype, options.national, options.international), sizeof(call->oad)-1);
 
 	/* configure channel */
+#if ASTERISK_VERSION_NUM < 100000
+	wat een onzin
+#endif
+
 #if ASTERISK_VERSION_NUM < 100000
 	ast->nativeformats = (options.law=='a')?AST_FORMAT_ALAW:AST_FORMAT_ULAW;
 	ast->readformat = ast->rawreadformat = ast->nativeformats;
