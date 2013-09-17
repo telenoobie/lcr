@@ -156,6 +156,11 @@ struct rtp_info {
 	unsigned short port;		/* peer's port */
 };
 
+struct param_transfer {
+	int invoke, result, error;
+	unsigned char invoke_id;
+};
+
 /* call-info structure CALLER */
 struct caller_info {
 	char id[32];			/* id of caller (user number) */
@@ -210,6 +215,7 @@ struct disconnect_info {
 	int location;			/* disconnect location */
 	char display[84];		/* optional display information */
 	int force;			/* special flag to release imediately */
+	struct param_transfer transfer; /* used to return result to the invoking endpoint */
 };
 
 /* call-info structure REDIR */
@@ -377,7 +383,8 @@ union parameter {
 	struct param_newref newref; /* MESSAGE_NEWREF */
 	unsigned int bridge_id; /* MESSAGE_BRIDGE */
 	struct param_traffic traffic; /* MESSAGE_TRAFFIC */
-	struct param_3pty threepty; /* MESSAGE_TRAFFIC */
+	struct param_3pty threepty; /* MESSAGE_3PTY */
+	struct param_transfer transfer; /* MESSAGE_TRANSFER (ECT in case of ISDN) */
 	unsigned int queue; /* MESSAGE_DISABLE_DEJITTER */
 };
 

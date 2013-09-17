@@ -317,7 +317,7 @@ class EndpointAppPBX : public EndpointApp
 
 	/* facility function */
 	void pick_join(char *extension);
-	int join_join_dss1(void);
+	int join_join_dss1(int invoke_id);
 	int join_join_fxs(void);
 	int join_3pty_dss1(void);
 	int join_3pty_fxs(void);
@@ -365,7 +365,7 @@ class EndpointAppPBX : public EndpointApp
 	void cryptman_msg2crengine(int msg, unsigned char *buf, int len);
 	void cryptman_state(int state);
 	void cryptman_timeout(int secs);
-	void message_disconnect_port(struct port_list *portlist, int cause, int location, const char *display);
+	void message_disconnect_port(struct port_list *portlist, int cause, int location, const char *display, const struct param_transfer *transfer);
 	void logmessage(int message_type, union parameter *param, unsigned int port_id, int dir);
 	void trace_header(const char *name, int direction);
 };
