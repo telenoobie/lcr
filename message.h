@@ -351,6 +351,13 @@ struct param_3pty {
 	unsigned char invoke_id;
 };
 
+struct param_dov {
+	int type; /* dov_type coding */
+	int level; /* volume of sending signals */
+	int length;
+	unsigned char data[255];
+};
+
 /* structure of message parameter */
 union parameter {
 	struct param_tone tone; /* MESSAGE_TONE */
@@ -378,6 +385,7 @@ union parameter {
 	unsigned int bridge_id; /* MESSAGE_BRIDGE */
 	struct param_traffic traffic; /* MESSAGE_TRAFFIC */
 	struct param_3pty threepty; /* MESSAGE_TRAFFIC */
+	struct param_dov dov; /* MESSAGE_DOV */
 	unsigned int queue; /* MESSAGE_DISABLE_DEJITTER */
 };
 
@@ -435,7 +443,10 @@ enum { /* messages between entities */
 	MESSAGE_TRAFFIC,	/* exchange bchannel traffic */
 	MESSAGE_3PTY,		/* 3PTY call invoke */
 	MESSAGE_TRANSFER,	/* call transfer invoke */
-	MESSAGE_DISABLE_DEJITTER/* tell (mISDN) port not to dejitter */
+	MESSAGE_DISABLE_DEJITTER,/* tell (mISDN) port not to dejitter */
+	MESSAGE_DOV_INDICATION,	/* data over voice message received */
+	MESSAGE_DOV_REQUEST,	/* sending data over voice message */
+	MESSAGE_DOV_LISTEN,	/* listen order to data over voice message */
 };
 
 #define MESSAGES static const char *messages_txt[] = { \
@@ -475,6 +486,9 @@ enum { /* messages between entities */
 	"MESSAGE_3PTY", \
 	"MESSAGE_TRANSFER", \
 	"MESSAGE_DISABLE_DEJITTER", \
+	"MESSAGE_DOV_INDIVATION", \
+	"MESSAGE_DOV_REQUEST", \
+	"MESSAGE_DOV_LISTEN", \
 };
 
 

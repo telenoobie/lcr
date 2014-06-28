@@ -188,6 +188,9 @@ Port::Port(int type, const char *portname, struct port_settings *settings, struc
 	p_record_buffer_writep = 0;
 	p_record_buffer_dir = 0;
 
+	/* D-O-V */
+	dov_init();
+
 	/* append port to chain */
 	next = NULL;
 	temp = port_first;
@@ -221,6 +224,8 @@ Port::~Port(void)
 
 	if (p_record)
 		close_record(0, 0);
+
+	dov_exit();
 
 	classuse--;
 
@@ -636,6 +641,16 @@ int Port::message_epoint(unsigned int epoint_id, int message_id, union parameter
 	case MESSAGE_BRIDGE: /* create / join / leave / destroy bridge */
 		PDEBUG(DEBUG_PORT, "PORT(%s) bridging to id %d\n", p_name, param->bridge_id);
 		bridge(param->bridge_id);
+		return 1;
+
+	case MESSAGE_DOV_REQUEST: /* Data-Over-Voice message */
+		PDEBUG(DEBUG_PORT, "PORT(%s) sending data over voice message (len=%d)\n", p_name, param->dov.length);
+		dov_sendmsg(param->dov.data, param->dov.length, (enum dov_type)param->dov.type, param->dov.level);
+		return 1;
+
+	case MESSAGE_DOV_LISTEN: /* Data-Over-Voice listen order */
+		PDEBUG(DEBUG_PORT, "PORT(%s) sending data over voice listen order\n", p_name);
+		dov_listen((enum dov_type)param->dov.type);
 		return 1;
 	}
 

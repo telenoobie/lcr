@@ -169,6 +169,11 @@ struct extension {
 	int facility;		/* must be set to forward facility to terminal */
 	int datacall;		/* data calls are handled as voice calls */
 	int no_seconds;		/* don't include seconds in the connect message */
+
+	char dov_ident[256];	/* ident string to be sent to remote via Data-Over-Voice */
+	char dov_log[256];	/* log file to store received and sent Data-Over-Voice messages */
+	int dov_type;		/* type of modulation */
+	int dov_level;		/* amplitude of signal */
 };
 
 int read_extension(struct extension *ext, char *number);
